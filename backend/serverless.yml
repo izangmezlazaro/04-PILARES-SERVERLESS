@@ -1,9 +1,13 @@
-service: festival-control-api
+service: festival-control-api-${env:STUDENT_CODE}
 frameworkVersion: ~4.45.0
  
 provider:
   name: aws
   runtime: nodejs22.x
+  region: ${env:AWS_REGION}
+  stage: dev
+  iam:
+    role: ${env:LAMBDA_ROLE_ARN}
  
 plugins:
   - serverless-offline
@@ -16,15 +20,7 @@ functions:
           path: hello
           method: get
           cors: true
-
-  listEvents:
-    handler: dist/events/list.handler
-    events:
-      - http:
-          path: events
-          method: get
-          cors: true
-
+ 
   getEvent:
     handler: dist/events/get.handler
     events:
@@ -32,7 +28,7 @@ functions:
           path: events/{id}
           method: get
           cors: true
-
+ 
   createEvent:
     handler: dist/events/create.handler
     events:
@@ -40,7 +36,15 @@ functions:
           path: events
           method: post
           cors: true
-
+ 
+  listEvents:
+    handler: dist/events/list.handler
+    events:
+      - http:
+          path: events
+          method: get
+          cors: true
+ 
   replaceEvent:
     handler: dist/events/replace.handler
     events:
@@ -48,7 +52,7 @@ functions:
           path: events/{id}
           method: put
           cors: true
-
+ 
   updateEvent:
     handler: dist/events/update.handler
     events:
@@ -56,7 +60,7 @@ functions:
           path: events/{id}
           method: patch
           cors: true
-
+ 
   deleteEvent:
     handler: dist/events/delete.handler
     events:
