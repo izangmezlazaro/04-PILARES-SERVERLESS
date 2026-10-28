@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "start": "npm run build && serverless offline",
+    "start": "npm run build && serverless offline start --host 127.0.0.1 --httpPort 4000 --lambdaPort 4102",
     "start:local": "npm run build && node local-server.js",
-    "start:dev": "npm run build && serverless offline start --host 127.0.0.1 --httpPort 3000"
+    "start:dev": "npm run build && serverless offline start --host 127.0.0.1 --httpPort 4000 --lambdaPort 4102"
   },
   "keywords": [],
   "author": "",

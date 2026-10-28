@@ -1,6 +1,6 @@
-service: festival-control-api-${env:STUDENT_CODE}
+service: venue-control-api-${env:STUDENT_CODE}
 frameworkVersion: ~4.45.0
- 
+
 provider:
   name: aws
   runtime: nodejs22.x
@@ -8,64 +8,61 @@ provider:
   stage: dev
   iam:
     role: ${env:LAMBDA_ROLE_ARN}
- 
+
 plugins:
   - serverless-offline
- 
+
 functions:
-  hello:
-    handler: dist/hello.handler
+  # ── GET /zones ─────────────────────────────────────────────────────────────
+  listZones:
+    handler: dist/zones/list.handler
     events:
       - http:
-          path: hello
+          path: zones
           method: get
           cors: true
- 
-  getEvent:
-    handler: dist/events/get.handler
+
+  # ── GET /zones/{id} ────────────────────────────────────────────────────────
+  getZone:
+    handler: dist/zones/get.handler
     events:
       - http:
-          path: events/{id}
+          path: zones/{id}
           method: get
           cors: true
- 
-  createEvent:
-    handler: dist/events/create.handler
+
+  # ── POST /zones ────────────────────────────────────────────────────────────
+  createZone:
+    handler: dist/zones/create.handler
     events:
       - http:
-          path: events
+          path: zones
           method: post
           cors: true
- 
-  listEvents:
-    handler: dist/events/list.handler
+
+  # ── PUT /zones/{id} ────────────────────────────────────────────────────────
+  replaceZone:
+    handler: dist/zones/replace.handler
     events:
       - http:
-          path: events
-          method: get
-          cors: true
- 
-  replaceEvent:
-    handler: dist/events/replace.handler
-    events:
-      - http:
-          path: events/{id}
+          path: zones/{id}
           method: put
           cors: true
- 
-  updateEvent:
-    handler: dist/events/update.handler
+
+  # ── PATCH /zones/{id} ──────────────────────────────────────────────────────
+  updateZoneStatus:
+    handler: dist/zones/update.handler
     events:
       - http:
-          path: events/{id}
+          path: zones/{id}
           method: patch
           cors: true
- 
-  deleteEvent:
-    handler: dist/events/delete.handler
+
+  # ── DELETE /zones/{id} ─────────────────────────────────────────────────────
+  deleteZone:
+    handler: dist/zones/delete.handler
     events:
       - http:
-          path: events/{id}
+          path: zones/{id}
           method: delete
           cors: true
- 
